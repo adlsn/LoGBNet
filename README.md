@@ -12,12 +12,12 @@ University of Notre Dame<sup>1</sup>, The University of Texas Rio Grande Valley<
 
 > This repository contains the implementation of **Hierarchical LoG Bayesian Neural Network (LoGB-Net)** for enhanced 3D aorta segmentation. The framework integrates Bayesian principles with a hierarchical Laplacian of Gaussian (LoG) module to achieve high geometric fidelity and multiscale blood vessel recognition, particularly for small-radius vessels. 
 
-### Key Features:
-- A **Bayesian LoG module** for uncertainty quantification and robust feature extraction.
-- A **UNet-inspired 3D architecture** with multiscale encoder-decoder pathways.
-- **ASPP refinement** for capturing multiscale contextual information.
+> ### Key Features:
+> - A **Bayesian LoG module** for uncertainty quantification and robust feature extraction.
+> - A **UNet-inspired 3D architecture** with multiscale encoder-decoder pathways.
+> - **ASPP refinement** for capturing multiscale contextual information.
 
-This method suits medical imaging tasks requiring accurate segmentation with geometric preservation, such as aortic dissection analysis and computational fluid dynamics (CFD) simulation preparation.
+> This method suits medical imaging tasks requiring accurate segmentation with geometric preservation, such as aortic dissection analysis and computational fluid dynamics (CFD) simulation preparation.
 
 ---
 
@@ -25,24 +25,16 @@ This method suits medical imaging tasks requiring accurate segmentation with geo
 
 > We evaluate our method on a 3D aorta segmentation dataset, with comparisons against baseline approaches.
 
-### Dataset
-- [VMR Aorta data](https://www.vascularmodel.org/)
-- [AVT data](https://figshare.com/articles/dataset/Aortic_Vessel_Tree_AVT_CTA_Datasets_and_Segmentations/14806362)
+> ### Dataset
+> - [VMR Aorta data](https://www.vascularmodel.org/)
+> - [AVT data](https://figshare.com/articles/dataset/Aortic_Vessel_Tree_AVT_CTA_Datasets_and_Segmentations/14806362)
 
-### Results
-> 1. **Quantitative Evaluation**:
-   - Achieved superior Dice scores compared to state-of-the-art methods.
-   - Demonstrated robustness in detecting small vessels.
+> ### Quantitative Evaluation**:
+>   - Achieved superior Dice scores compared to state-of-the-art methods.
+>   - Demonstrated robustness in detecting small vessels.
   
 <div>
   <img src='quantitative.png'>
-</div>
-
-2. **Qualitative Analysis**:
-   - Produced smoother boundaries and reduced false positives in complex regions.
-
-<div>
-  <img src='qualitative.png'>
 </div>
 
 ---
