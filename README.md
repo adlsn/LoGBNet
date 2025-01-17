@@ -5,7 +5,7 @@
 University of Notre Dame<sup>1</sup>, The University of Texas Rio Grande Valley<sup>2</sup>, Cornell University<sup>3</sup>
 
 <div>
-  <img src='method.png'>
+  <img src='overview.png'>
 </div>
 
 ## Introduction
@@ -17,7 +17,7 @@ This repository contains the implementation of **Hierarchical LoG Bayesian Neura
 - A **UNet-inspired 3D architecture** with multiscale encoder-decoder pathways.
 - **ASPP refinement** for capturing multiscale contextual information.
 
-This method is particularly suited for medical imaging tasks requiring accurate segmentation with geometric preservation, such as aortic dissection analysis and computational fluid dynamics (CFD) simulation preparation.
+This method suits medical imaging tasks requiring accurate segmentation with geometric preservation, such as aortic dissection analysis and computational fluid dynamics (CFD) simulation preparation.
 
 ---
 
@@ -47,17 +47,8 @@ The proposed framework integrates several innovative components:
 We evaluate our method on a 3D aorta segmentation dataset, with comparisons against baseline approaches.
 
 ### Dataset
-- Aorta segmentation dataset with both **large branches** and **small-radius supra-aortic branches**.
-- Data is preprocessed using resampling and intensity normalization.
-
-### Training
-- **Input Size**: 3D volumes of size 64×64×64.
-- **Loss Function**: Bayesian Dice Loss (combination of Dice and KL divergence).
-- **Optimizer**: Adam optimizer with a learning rate of 1e-4 and cosine annealing scheduler.
-
-### Evaluation Metrics
-- **Dice Similarity Coefficient (DSC)** for segmentation quality.
-- **Uncertainty Analysis** using KL divergence values from the Bayesian LoG module.
+- [VMR Aorta data](https://www.vascularmodel.org/)
+- [AVT data](https://figshare.com/articles/dataset/Aortic_Vessel_Tree_AVT_CTA_Datasets_and_Segmentations/14806362)
 
 ### Results
 1. **Quantitative Evaluation**:
@@ -65,8 +56,6 @@ We evaluate our method on a 3D aorta segmentation dataset, with comparisons agai
    - Demonstrated robustness in detecting small vessels.
 2. **Qualitative Analysis**:
    - Produced smoother boundaries and reduced false positives in complex regions.
-3. **Uncertainty Visualization**:
-   - Visualized uncertainty maps highlighting areas of low confidence, useful for clinical decision-making.
 
 ---
 
