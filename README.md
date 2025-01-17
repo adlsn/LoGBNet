@@ -10,7 +10,7 @@ University of Notre Dame<sup>1</sup>, The University of Texas Rio Grande Valley<
 
 ## Introduction
 
-This repository contains the implementation of **Hierarchical LoG Bayesian Neural Network (LoGB-Net)** for enhanced 3D aorta segmentation. The framework integrates Bayesian principles with a hierarchical Laplacian of Gaussian (LoG) module to achieve high geometric fidelity and multiscale blood vessel recognition, particularly for small-radius vessels. 
+> This repository contains the implementation of **Hierarchical LoG Bayesian Neural Network (LoGB-Net)** for enhanced 3D aorta segmentation. The framework integrates Bayesian principles with a hierarchical Laplacian of Gaussian (LoG) module to achieve high geometric fidelity and multiscale blood vessel recognition, particularly for small-radius vessels. 
 
 ### Key Features:
 - A **Bayesian LoG module** for uncertainty quantification and robust feature extraction.
@@ -21,47 +21,32 @@ This method suits medical imaging tasks requiring accurate segmentation with geo
 
 ---
 
-## Method
-
-The proposed framework integrates several innovative components:
-
-1. **Bayesian LoG Module**:
-   - Utilizes precomputed 3D Laplacian of Gaussian kernels to enhance multiscale feature extraction.
-   - Computes KL divergence for uncertainty quantification during training, aiding robust segmentation.
-
-2. **Hierarchical Encoder-Decoder Architecture**:
-   - Inspired by UNet, the architecture includes multiple down-sampling and up-sampling pathways.
-   - Each stage refines spatial and contextual features while preserving critical geometric details.
-
-3. **ASPP Refinement**:
-   - Adds Atrous Spatial Pyramid Pooling (ASPP) to refine combined features from the decoder and LoG module.
-   - Enables capturing long-range dependencies and multiscale contextual information.
-
-4. **Bayesian Loss**:
-   - Combines the Dice loss for segmentation accuracy with KL divergence from the Bayesian LoG module, ensuring both performance and reliability.
-
----
-
 ## Experiments
 
-We evaluate our method on a 3D aorta segmentation dataset, with comparisons against baseline approaches.
+> We evaluate our method on a 3D aorta segmentation dataset, with comparisons against baseline approaches.
 
 ### Dataset
 - [VMR Aorta data](https://www.vascularmodel.org/)
 - [AVT data](https://figshare.com/articles/dataset/Aortic_Vessel_Tree_AVT_CTA_Datasets_and_Segmentations/14806362)
 
 ### Results
-1. **Quantitative Evaluation**:
+> 1. **Quantitative Evaluation**:
    - Achieved superior Dice scores compared to state-of-the-art methods.
    - Demonstrated robustness in detecting small vessels.
+  
+<div>
+  <img src='quantitative.png'>
+</div>
+
 2. **Qualitative Analysis**:
    - Produced smoother boundaries and reduced false positives in complex regions.
 
+<div>
+  <img src='qualitative.png'>
+</div>
+
 ---
 
-<div align="center">
-  <img src='qualitative_results.png'>
-</div>
 
 ## Installation, Train, and Test
 The code is developed by Python. After cloning the repository, follow the steps below for installation:
