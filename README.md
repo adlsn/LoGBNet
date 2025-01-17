@@ -23,7 +23,7 @@ University of Notre Dame<sup>1</sup>, The University of Texas Rio Grande Valley<
 
 ## Experiments
 
-> We evaluate our method on a 3D aorta segmentation dataset, with comparisons against baseline approaches.
+> We evaluate our method on the following dataset, with comparisons against baseline approaches.
 
 > ### Dataset
 > - [VMR Aorta data](https://www.vascularmodel.org/)
