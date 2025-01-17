@@ -10,7 +10,7 @@ University of Notre Dame<sup>1</sup>, The University of Texas Rio Grande Valley<
 
 ## Introduction
 
-This repository contains the implementation of **Bayesian Hierarchical Laplacian of Gaussian Neural Network (sLoGNN)** for enhanced 3D aorta segmentation. The framework integrates Bayesian principles with a hierarchical Laplacian of Gaussian (LoG) module to achieve high geometric fidelity and multiscale blood vessel recognition, particularly for small-radius vessels. 
+This repository contains the implementation of **Hierarchical LoG Bayesian Neural Network (LoGB-Net)** for enhanced 3D aorta segmentation. The framework integrates Bayesian principles with a hierarchical Laplacian of Gaussian (LoG) module to achieve high geometric fidelity and multiscale blood vessel recognition, particularly for small-radius vessels. 
 
 ### Key Features:
 - A **Bayesian LoG module** for uncertainty quantification and robust feature extraction.
