@@ -126,6 +126,6 @@ def validate(epoch):
 
 # Run training
 if __name__ == "__main__":
-    for epoch in range(1, 201):
+    for epoch in range(1, 5001):
         train(epoch)
         validate(epoch)
