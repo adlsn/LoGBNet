@@ -34,7 +34,7 @@ University of Notre Dame<sup>1</sup>, The University of Texas Rio Grande Valley<
 >   - Demonstrated robustness in detecting small vessels.
   
 <div>
-  <img src='quantitative.png'>
+  <img src='qualitative.png'>
 </div>
 
 ---
