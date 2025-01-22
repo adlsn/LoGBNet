@@ -1,61 +1,76 @@
-import numpy as np
 import torch
+import torch.nn as nn
 import vmtk
-from torch import nn
+import torch.nn.functional as F
+from torch.distributions import Normal
 
+
+class BayesianConv3D(nn.Module):
+    def __init__(self, in_channels, out_channels, kernel_size, prior_std=1.0, kernel_file=None):
+
+        super().__init__()
+        self.in_channels = in_channels
+        self.out_channels = out_channels
+        self.kernel_size = kernel_size
+        self.prior_std = prior_std
+
+        self.weight_mu = nn.Parameter(torch.zeros(out_channels, in_channels, kernel_size, kernel_size, kernel_size))
+        self.weight_rho = nn.Parameter(torch.full_like(self.weight_mu, -3.0)) 
+
+        if kernel_file:
+            self.initialize_with_log_kernel(kernel_file)
+
+        self.prior = Normal(0, prior_std)
+
+    def forward(self, x):
+
+        weight_sigma = torch.log1p(torch.exp(self.weight_rho))  
+        weight = self.weight_mu + weight_sigma * torch.randn_like(self.weight_mu)  
+
+        return F.conv3d(x, weight, padding=self.kernel_size // 2)
+
+    def kl_divergence(self):
+
+        posterior = Normal(self.weight_mu, torch.log1p(torch.exp(self.weight_rho)))
+
+        kl = torch.distributions.kl_divergence(posterior, self.prior)
+        return kl.sum()
+
+    def initialize_with_log_kernel(self, kernel_file):
+
+        log_kernel = torch.from_numpy(np.load(kernel_file)).float() 
+        if log_kernel.shape == self.weight_mu.shape:
+            with torch.no_grad():
+                self.weight_mu.copy_(log_kernel)
+        else:
+            raise ValueError(f"Loaded kernel shape {log_kernel.shape} does not match expected shape {self.weight_mu.shape}.")
 
 class BayesianLoGNN(nn.Module):
-
-    def __init__(self, sigma_range=(0.5, 2.5), kernel_sizes=(3, 5, 7, 9, 11)):
+    def __init__(self, sigma_range=(0.5, 2.5), kernel_sizes=(3, 5, 7, 9, 11), kernel_dir="log_kernels/"):
 
         super().__init__()
         self.sigma_range = sigma_range
         self.kernel_sizes = kernel_sizes
 
         self.log_layers = nn.ModuleList([
-            nn.Conv3d(1, 1, kernel_size, padding=kernel_size // 2, bias=False)
+            BayesianConv3D(
+                in_channels=1,
+                out_channels=1,
+                kernel_size=kernel_size,
+                kernel_file=f"{kernel_dir}/log_3D_kernel_{kernel_size}.npy"
+            )
             for kernel_size in kernel_sizes
         ])
         self.relu = nn.ReLU(inplace=True)
 
-        self.kl_div = 0.0
-
     def forward(self, x):
-
         outputs = []
         for layer in self.log_layers:
             outputs.append(self.relu(layer(x)))
         concatenated = torch.cat(outputs, dim=1)
-
-        self.kl_div = self.compute_kl_div()
         return concatenated
-
-    def initialize_weights(self):
-
-        for i, layer in enumerate(self.log_layers):
-            kernel = self.load_log_kernel(layer.kernel_size[0])
-            layer.weight.data = kernel.unsqueeze(0).unsqueeze(0)
-
-    @staticmethod
-    def load_log_kernel(size):
-
-        file_name = f"log_3D_kernel_{size}.npy"
-        kernel = np.load(file_name)
-        return torch.from_numpy(kernel).float()
 
     def compute_kl_div(self):
 
-        batch_size, channels, depth, height, width = outputs.size()
-        target_distribution = torch.full_like(outputs, 1.0 / (depth * height * width))
-
-        predicted_distribution = F.softmax(outputs, dim=1)
-
-        epsilon = 1e-10
-        predicted_distribution = torch.clamp(predicted_distribution, epsilon, 1.0)
-        target_distribution = torch.clamp(target_distribution, epsilon, 1.0)
-
-        kl_div = torch.sum(
-            target_distribution * torch.log(target_distribution / predicted_distribution)
-        ) / batch_size
-
-        return kl_div.item()
+        total_kl = sum(layer.kl_divergence() for layer in self.log_layers)
+        return total_kl
