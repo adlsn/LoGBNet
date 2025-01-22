@@ -45,5 +45,17 @@ class BayesianLoGNN(nn.Module):
 
     def compute_kl_div(self):
 
-        kl_value = torch.rand(1).item()
-        return kl_value
+        batch_size, channels, depth, height, width = outputs.size()
+        target_distribution = torch.full_like(outputs, 1.0 / (depth * height * width))
+
+        predicted_distribution = F.softmax(outputs, dim=1)
+
+        epsilon = 1e-10
+        predicted_distribution = torch.clamp(predicted_distribution, epsilon, 1.0)
+        target_distribution = torch.clamp(target_distribution, epsilon, 1.0)
+
+        kl_div = torch.sum(
+            target_distribution * torch.log(target_distribution / predicted_distribution)
+        ) / batch_size
+
+        return kl_div.item()
