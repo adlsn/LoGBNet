@@ -6,7 +6,7 @@ from torch.distributions import Normal
 
 
 class BayesianConv3D(nn.Module):
-    def __init__(self, in_channels, out_channels, kernel_size, prior_std=1.0, kernel_file=None):
+    def __init__(self, in_channels, out_channels, kernel_size, prior_std=1.0, kf=None):
 
         super().__init__()
         self.in_channels = in_channels
@@ -17,8 +17,8 @@ class BayesianConv3D(nn.Module):
         self.weight_mu = nn.Parameter(torch.zeros(out_channels, in_channels, kernel_size, kernel_size, kernel_size))
         self.weight_rho = nn.Parameter(torch.full_like(self.weight_mu, -3.0)) 
 
-        if kernel_file:
-            self.initialize_with_log_kernel(kernel_file)
+        if kf:
+            self.initializeLK(kf)
 
         self.prior = Normal(0, prior_std)
 
@@ -36,14 +36,14 @@ class BayesianConv3D(nn.Module):
         kl = torch.distributions.kl_divergence(posterior, self.prior)
         return kl.sum()
 
-    def initialize_with_log_kernel(self, kernel_file):
+    def initializeLK(self, kf):
 
-        log_kernel = torch.from_numpy(np.load(kernel_file)).float() 
-        if log_kernel.shape == self.weight_mu.shape:
+        lk = torch.from_numpy(np.load(kf)).float() 
+        if lk.shape == self.weight_mu.shape:
             with torch.no_grad():
-                self.weight_mu.copy_(log_kernel)
+                self.weight_mu.copy_(lk)
         else:
-            raise ValueError(f"Loaded kernel shape {log_kernel.shape} does not match expected shape {self.weight_mu.shape}.")
+            raise ValueError(f"Error!!!")
 
 class BayesianLoGNN(nn.Module):
     def __init__(self, sigma_range=(0.5, 2.5), kernel_sizes=(3, 5, 7, 9, 11), kernel_dir="log_kernels/"):
