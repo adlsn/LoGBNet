@@ -29,7 +29,7 @@ University of Notre Dame<sup>1</sup>, The University of Texas Rio Grande Valley<
 > - [VMR Aorta data](https://www.vascularmodel.org/)
 > - [AVT data](https://figshare.com/articles/dataset/Aortic_Vessel_Tree_AVT_CTA_Datasets_and_Segmentations/14806362)
 
-> ### Qualitative Evaluation**:
+> ### Qualitative Evaluation:
 >   - Achieved superior Dice scores compared to state-of-the-art methods.
 >   - Demonstrated robustness in detecting small vessels.
   
