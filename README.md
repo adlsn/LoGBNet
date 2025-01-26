@@ -1,6 +1,6 @@
 # Hierarchical LoG Bayesian Neural Network for Enhanced Aorta Segmentation
 
-[Delin An](https://github.com/adlsn)<sup>1</sup>, Pan Du<sup>1</sup>, [Pengfei Gu](https://pgu-nd.github.io/)<sup>2</sup>, [Jian-Xun Wang](https://www.engineering.cornell.edu/faculty-directory/jian-xun-wang)<sup>3</sup>, and [Chaoli Wang](https://sites.nd.edu/chaoli-wang/)<sup>1</sup>
+[Delin An](https://github.com/adlsn)<sup>1</sup>, Pan Du<sup>1</sup>, [Pengfei Gu](https://pgu-nd.github.io/)<sup>2</sup>, [Jian-Xun Wang](https://www.engineering.cornell.edu/faculty-directory/jian-xun-wang)<sup>1, 3</sup>, and [Chaoli Wang](https://sites.nd.edu/chaoli-wang/)<sup>1</sup>
 
 University of Notre Dame<sup>1</sup>, The University of Texas Rio Grande Valley<sup>2</sup>, Cornell University<sup>3</sup>
 
